@@ -11,8 +11,8 @@ void UpdateDrawFrame(void);
 int main(void) {
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(320, 640, "ReFill");
-	screenWidth  = 320; //GetScreenWidth();
-	screenHeight = 640; //GetScreenHeight();
+	screenWidth  = GetScreenWidth();
+	screenHeight = GetScreenHeight();
 	#if defined(PLATFORM_WEB)
 		emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 	#else
