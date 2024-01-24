@@ -37,7 +37,12 @@ jobs:
     - name: Create hash
       run: git rev-parse HEAD > rev-hash.txt
 
-
+    - uses: dev-drprasad/delete-tag-and-release@v0.2.1
+      name: Delete latest alpha tag and release
+      with:
+        tag_name: alpha
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Sleep for 5 seconds, to allow the tag to be deleted (why?)
       run: sleep 5s    
