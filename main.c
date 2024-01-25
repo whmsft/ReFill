@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "./include/raylib.h"
 
 #if defined(PLATFORM_WEB)
@@ -8,6 +9,8 @@
 int screenWidth, screenHeight, targetValue;
 int wheelValue = 0;
 int gameScore = 0;
+char targetStr[10];
+char scoreStr[10];
 
 void UpdateDrawFrame(void);
 
@@ -39,19 +42,26 @@ int main(void) {
 
 void UpdateDrawFrame(void) {
 	// Update
+	sprintf(targetStr, "Target: %d", targetValue);
+	sprintf(scoreStr, "Score:  %d", gameScore);
 	if (wheelValue>100) wheelValue=0;
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) wheelValue+=2;
 	if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 		wheelValue = 0;
-		if (abs(wheelValue-targetValue)<10) {
+		if (abs(wheelValue-targetValue)<50) {
 			targetValue = GetRandomValue(1,49)*2;
 			gameScore += 1;
+		} else {
+			targetValue = GetRandomValue(1,49)*2;
+			gameScore -= 1;
 		}
 	}
 
 	// Draw
 	BeginDrawing();
 	ClearBackground(BLACK);
+	DrawText(targetStr, screenWidth/14, screenWidth/14, 16, RAYWHITE);
+	DrawText(scoreStr, screenWidth/14, screenWidth/14+18, 16, RAYWHITE);
 	DrawRectangle(screenWidth/14, (screenHeight-screenWidth)+screenWidth/14, screenWidth*12/14, screenWidth*12/14, RAYWHITE);
 	DrawRectangle(screenWidth*1.5/14, (screenHeight-screenWidth)+screenWidth*1.5/14, screenWidth*11/14, screenWidth*11/14, BLACK);
 	DrawRectangle(screenWidth*2/14, (screenHeight-screenWidth)+screenWidth*(120-wheelValue)/140, screenWidth*10/14, screenWidth*wheelValue/140, RAYWHITE);
