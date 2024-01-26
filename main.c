@@ -25,13 +25,11 @@ int abs(int number) {
 int main(void) {
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(320, 640, "ReFill");
-	screenWidth  = GetScreenWidth();
-	screenHeight = GetScreenHeight();
 	targetValue = GetRandomValue(1,49)*2;
 	#if defined(PLATFORM_WEB)
 		emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 	#else
-		SetTargetFPS(60);
+		SetTargetFPS(30);
 		while (!WindowShouldClose()) {
 			UpdateDrawFrame();
 		}
@@ -42,20 +40,26 @@ int main(void) {
 
 void UpdateDrawFrame(void) {
 	// Update
+	screenWidth  = GetScreenWidth();
+	screenHeight = GetScreenHeight();
 	sprintf(targetStr, "Target: %d", targetValue);
 	sprintf(scoreStr, "Score:  %d", gameScore);
 	if (wheelValue>100) wheelValue=0;
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) wheelValue+=2;
 	if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
-		wheelValue = 0;
-		if (abs(wheelValue-targetValue)<50) {
+		if (abs(targetValue-wheelValue)<20) {
 			targetValue = GetRandomValue(1,49)*2;
 			gameScore += 1;
 		} else {
 			targetValue = GetRandomValue(1,49)*2;
 			gameScore -= 1;
 		}
+		wheelValue = 0;
 	}
+	Vector2 tri11 = {screenWidth*2/14, (screenHeight-screenWidth)+screenWidth*(120-wheelValue)/140};
+	Vector2 tri12 = {screenWidth*2/14, screenHeight-(screenWidth*2/14)};
+	Vector2 tri13 = {screenWidth*12/14, screenHeight-(screenWidth*2/14)};
+	Vector2 tri22 = {screenWidth*12/14, (screenHeight-screenWidth)+screenWidth*(120-wheelValue)/140};
 
 	// Draw
 	BeginDrawing();
@@ -64,6 +68,9 @@ void UpdateDrawFrame(void) {
 	DrawText(scoreStr, screenWidth/14, screenWidth/14+18, 16, RAYWHITE);
 	DrawRectangle(screenWidth/14, (screenHeight-screenWidth)+screenWidth/14, screenWidth*12/14, screenWidth*12/14, RAYWHITE);
 	DrawRectangle(screenWidth*1.5/14, (screenHeight-screenWidth)+screenWidth*1.5/14, screenWidth*11/14, screenWidth*11/14, BLACK);
-	DrawRectangle(screenWidth*2/14, (screenHeight-screenWidth)+screenWidth*(120-wheelValue)/140, screenWidth*10/14, screenWidth*wheelValue/140, RAYWHITE);
+	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+		DrawTriangle(tri11, tri12, tri13, RAYWHITE);
+		DrawTriangle(tri13, tri22, tri11, RAYWHITE);
+	}
 	EndDrawing();
 }
