@@ -27,7 +27,7 @@ int main(void) {
 	InitWindow(320, 640, "ReFill");
 	targetValue = GetRandomValue(1,49)*2;
 	#if defined(PLATFORM_WEB)
-		emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+		emscripten_set_main_loop(UpdateDrawFrame, 10, 1);
 	#else
 		SetTargetFPS(30);
 		while (!WindowShouldClose()) {
