@@ -9,8 +9,8 @@
 int screenWidth, screenHeight, targetValue;
 int wheelValue = 0;
 int gameScore = 0;
-char targetStr[10];
-char scoreStr[10];
+char targetStr[20];
+char scoreStr[20];
 
 void UpdateDrawFrame(void);
 
@@ -27,7 +27,7 @@ int main(void) {
 	InitWindow(320, 640, "ReFill");
 	targetValue = GetRandomValue(1,49)*2;
 	#if defined(PLATFORM_WEB)
-		emscripten_set_main_loop(UpdateDrawFrame, 10, 1);
+		emscripten_set_main_loop(UpdateDrawFrame, 30, 1);
 	#else
 		SetTargetFPS(30);
 		while (!WindowShouldClose()) {
