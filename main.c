@@ -27,7 +27,7 @@ int main(void) {
 	InitWindow(320, 640, "ReFill");
 	targetValue = GetRandomValue(1,49)*2;
 	#if defined(PLATFORM_WEB)
-		emscripten_set_main_loop(UpdateDrawFrame, 30, 1);
+		emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 	#else
 		SetTargetFPS(60);
 		while (!WindowShouldClose()) {
@@ -44,8 +44,8 @@ void UpdateDrawFrame(void) {
 	screenHeight = GetScreenHeight();
 	snprintf(targetStr, 20, "Target: %d", targetValue);
 	snprintf(scoreStr, 20, "Score: %d", gameScore);
-	if (wheelValue>100) wheelValue=0;
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) wheelValue+=2;
+	if (wheelValue>100) wheelValue=0;
 	if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 		if (abs(targetValue-wheelValue)<20) {
 			targetValue = GetRandomValue(1,49)*2;
