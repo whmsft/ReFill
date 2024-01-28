@@ -42,8 +42,8 @@ void UpdateDrawFrame(void) {
 	// Update
 	screenWidth  = GetScreenWidth();
 	screenHeight = GetScreenHeight();
-	sprintf(targetStr, "Target: %d", targetValue);
-	sprintf(scoreStr, "Score:  %d", gameScore);
+	snprintf(targetStr, 20, "Target: %d", targetValue);
+	snprintf(scoreStr, 20, "Score: %d", gameScore);
 	if (wheelValue>100) wheelValue=0;
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) wheelValue+=2;
 	if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
@@ -64,8 +64,8 @@ void UpdateDrawFrame(void) {
 	// Draw
 	BeginDrawing();
 	ClearBackground(BLACK);
-	DrawText(targetStr, screenWidth/14, screenWidth/14, 16, RAYWHITE);
-	DrawText(scoreStr, screenWidth/14, screenWidth/14+18, 16, RAYWHITE);
+	DrawText(targetStr, screenWidth/14, screenWidth/14, 20, RAYWHITE);
+	DrawText(scoreStr, screenWidth/14, screenWidth/14+18, 20, RAYWHITE);
 	DrawRectangle(screenWidth/14, (screenHeight-screenWidth)+screenWidth/14, screenWidth*12/14, screenWidth*12/14, RAYWHITE);
 	DrawRectangle(screenWidth*1.5/14, (screenHeight-screenWidth)+screenWidth*1.5/14, screenWidth*11/14, screenWidth*11/14, BLACK);
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
