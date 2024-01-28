@@ -29,7 +29,7 @@ int main(void) {
 	#if defined(PLATFORM_WEB)
 		emscripten_set_main_loop(UpdateDrawFrame, 30, 1);
 	#else
-		SetTargetFPS(30);
+		SetTargetFPS(60);
 		while (!WindowShouldClose()) {
 			UpdateDrawFrame();
 		}
