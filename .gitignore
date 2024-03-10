@@ -1,7 +1,5 @@
-# Executables
+# Executables for me
 *.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# Log File
+*.log
+
