@@ -1,5 +1,3 @@
-# Executables for me
 *.exe
-# Log File
 *.log
-
+*.egg
